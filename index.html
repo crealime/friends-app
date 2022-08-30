@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Friends App</title>
+  <meta name="description" content="Friends App — find your new friends">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="img/favicon-32.png" sizes="32x32">
+  <meta name="theme-color" content="#0E3247">
+</head>
+<body>
+<header class="header">
+  <h1 class="header__title">Friends<span>App</span></h1>
+  <div class="filter">
+    <div class="filter__item">
+      <div class="filter__description">Sort by name</div>
+      <div class="filter__buttons-box">
+        <label class="filter__label">
+          <input class="filter__input" type="radio" name="by-name">
+          <span class="filter__button bg-man"><i class="fa-solid fa-arrow-down-a-z"></i></span>
+        </label>
+        <label class="filter__label">
+          <input class="filter__input" type="radio" name="by-name">
+          <span class="filter__button bg-woman"><i class="fa-solid fa-arrow-up-z-a"></i></span>
+        </label>
+      </div>
+    </div>
+    <div class="filter__item">
+      <div class="filter__description">Sort by age</div>
+      <div class="filter__buttons-box">
+        <label class="filter__label">
+          <input class="filter__input" type="radio" name="by-age">
+          <span class="filter__button bg-man"><i class="fa-solid fa-arrow-down-1-9"></i></span>
+        </label>
+        <label class="filter__label">
+          <input class="filter__input" type="radio" name="by-age">
+          <span class="filter__button bg-woman"><i class="fa-solid fa-arrow-up-9-1"></i></span>
+        </label>
+      </div>
+    </div>
+    <div class="filter__item">
+      <div class="filter__description">Filter by gender</div>
+      <div class="filter__buttons-box">
+        <label class="filter__label">
+          <input class="filter__input" type="radio" name="by-gender">
+          <span class="filter__button bg-man"><i class="fa-solid fa-person-half-dress"></i></span>
+        </label>
+        <label class="filter__label">
+          <input class="filter__input" type="radio" name="by-gender">
+          <span class="filter__button bg-man"><i class="fa-solid fa-person"></i></span>
+        </label>
+        <label class="filter__label">
+          <input class="filter__input" type="radio" name="by-gender">
+          <span class="filter__button bg-woman"><i class="fa-solid fa-person-dress"></i></span>
+        </label>
+      </div>
+    </div>
+    <div class="filter__item">
+      <div class="filter__description">Filter by age</div>
+      <div class="filter__values range__values">
+        <span id="range1">0</span>
+        <span id="dash"> - </span>
+        <span id="range2">100</span>
+      </div>
+      <div class="range">
+        <div class="range__track"></div>
+        <input type="range" min="0" max="100" value="0" class="range__input_01" oninput="fillRangeOne()">
+        <input type="range" min="0" max="100" value="100" class="range__input_02" oninput="fillRangeTwo()">
+      </div>
+    </div>
+  </div>
+</header>
+<main class="main">
+
+</main>
+<script type="module" src="js/range.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

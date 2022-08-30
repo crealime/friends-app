@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="css/range.css">
+</head>
+<body>
+<div class="wrapper">
+  <div class="container">
+    <div class="range-track"></div>
+    <input type="range" min="0" max="100" value="0" class="range-01" oninput="fillRangeOne()">
+    <input type="range" min="0" max="100" value="100" class="range-02" oninput="fillRangeTwo()">
+  </div>
+  <div class="values">
+    <span id="range1">10 </span>
+    <span id="dash"> - </span>
+    <span id="range2">100</span>
+  </div>
+</div>
+  <script src="js/range.js"></script>
+</body>
+</html>
