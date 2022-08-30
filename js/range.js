@@ -1,6 +1,7 @@
-export default function changeCustomRange(input01, input02, track, values, reset) {
+export default function changeCustomRange(input01, input02, track, values, reset, colorPrimary, colorMan, colorWoman) {
   const RANGE_THUMB_OFFSET = 2
   const inputs = new Map()
+
   inputs.set(input01, input02)
   inputs.set(input02, input01)
 
@@ -40,6 +41,6 @@ export default function changeCustomRange(input01, input02, track, values, reset
     let percent01 = input01.value / input01.max * 100 - RANGE_THUMB_OFFSET
     let percent02 = input02.value / input02.max * 100 + RANGE_THUMB_OFFSET
 
-    track.style.background = `linear-gradient(to right, rgba(14, 50, 71, 50%) ${percent01}% , rgba(122, 195, 226, 100%) ${percent01}% , rgba(237, 126, 175, 100%) ${percent02}%, rgba(14, 50, 71, 100%) ${percent02}%)`
+    track.style.background = `linear-gradient(to right, ${colorPrimary} ${percent01}% , ${colorMan} ${percent01}% , ${colorWoman} ${percent02}%, ${colorPrimary} ${percent02}%)`
   }
 }
