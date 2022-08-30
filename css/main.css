@@ -58,7 +58,10 @@ input:focus, input:checked, input:hover {
 
 .header {
   position: fixed;
-  width: 300px;
+  width: 340px;
+  max-height: calc(100vh - 20px);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .header__title {
@@ -75,7 +78,7 @@ input:focus, input:checked, input:hover {
 
 .main {
   position: relative;
-  margin-left: 300px;
+  margin-left: 340px;
   background: var(--color-background);
   border-radius: 10px;
   min-height: calc(100vh - 20px);
@@ -86,18 +89,14 @@ input:focus, input:checked, input:hover {
   .header {
     position: fixed;
     width: 200px;
-    max-height: calc(100vh - 20px);
-    overflow-x: hidden;
-    overflow-y: auto;
   }
 
   .header__title {
     font-size: 24px;
   }
 
-  .filter__description {
-    width: 100%;
-    margin-bottom: 16px;
+  .filter__buttons-box {
+    margin-top: 16px;
   }
 
   .main {

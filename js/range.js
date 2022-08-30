@@ -1,4 +1,4 @@
-export default function changeCustomRange(input01, input02, track, values, reset, colorPrimary, colorMan, colorWoman) {
+export default function changeCustomRange(input01, input02, track, values, form, colorPrimary, colorMan, colorWoman) {
   const RANGE_THUMB_OFFSET = 2
   const inputs = new Map()
 
@@ -8,7 +8,7 @@ export default function changeCustomRange(input01, input02, track, values, reset
   changeRangeValuesInHTML(input01, input02, values)
   fillRangeTrack(input01, input02, track)
 
-  reset.addEventListener('click', function() {
+  form.addEventListener('reset', function() {
     setTimeout(() => {
       changeRangeValuesInHTML(input01, input02, values)
       fillRangeTrack(input01, input02, track)}, 10)
