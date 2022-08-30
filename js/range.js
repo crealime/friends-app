@@ -1,59 +1,45 @@
-export default class Range {
-  constructor(input01, input02, values) {
-    this.input01 = input01
-    this.input02 = input02
-    this.values = values
-  }
-}
+export default function changeCustomRange(input01, input02, track, values, reset) {
+  const RANGE_THUMB_OFFSET = 2
+  const inputs = new Map()
+  inputs.set(input01, input02)
+  inputs.set(input02, input01)
 
+  changeRangeValuesInHTML(input01, input02, values)
+  fillRangeTrack(input01, input02, track)
 
-window.onload = function(){
-  fillRangeOne();
-  fillRangeTwo();
-}
+  reset.addEventListener('click', function() {
+    setTimeout(() => {
+      changeRangeValuesInHTML(input01, input02, values)
+      fillRangeTrack(input01, input02, track)}, 10)
+  })
 
-let rangeOne = document.querySelector(".range__input_01");
-let rangeTwo = document.querySelector(".range__input_02");
-let displayValOne = document.getElementById("range1");
-let displayValTwo = document.getElementById("range2");
-let displayValDash = document.getElementById("dash");
-let minGap = 0;
-let rangeTrack = document.querySelector(".range__track");
-let rangeMaxValue = document.querySelector(".range__input_01").max;
+  input01.addEventListener('input', function() {
+    changeCustomRange(this)
+  })
 
-function fillRangeOne(){
-  if(parseInt(rangeTwo.value) - parseInt(rangeOne.value) <= minGap){
-    rangeOne.value = parseInt(rangeTwo.value) - minGap;
-  }
-  if(parseInt(rangeTwo.value) - parseInt(rangeOne.value) !== 0){
-    displayValOne.textContent = rangeOne.value;
-    displayValDash.textContent = ' - ';
-  } else {
-    displayValOne.textContent = '';
-    displayValDash.textContent = '';
-  }
-  fillColor();
-}
-function fillRangeTwo(){
-  if(parseInt(rangeTwo.value) - parseInt(rangeOne.value) <= minGap){
-    rangeTwo.value = parseInt(rangeOne.value) + minGap;
-  }
-  if(parseInt(rangeTwo.value) - parseInt(rangeOne.value) !== 0){
-    displayValOne.textContent = rangeOne.value;
-    displayValDash.textContent = ' - ';
-  } else {
-    displayValOne.textContent = '';
-    displayValDash.textContent = '';
-  }
-  displayValTwo.textContent = rangeTwo.value;
-  fillColor();
-}
-function fillColor(){
-  if(rangeOne.value === '100'){
-    rangeOne.style.zIndex = '10'
+  input02.addEventListener('input', function() {
+    changeCustomRange(this)
+  })
+
+  function changeCustomRange(that) {
+    if (+input01.value <= +input02.value) {
+      input01.style.zIndex = '1'
+      input02.style.zIndex = '1'
+      that.style.zIndex = '2'
+      changeRangeValuesInHTML(input01, input02, values)
+      fillRangeTrack(input01, input02, track)
+    }
+    else that.value = inputs.get(that).value
   }
 
-  let percent1 = rangeOne.value / rangeMaxValue * 100;
-  let percent2 = rangeTwo.value / rangeMaxValue * 100;
-  rangeTrack.style.background = `linear-gradient(to right, rgba(14, 50, 71, 50%) ${percent1}% , rgba(122, 195, 226, 100%) ${percent1}% , rgba(237, 126, 175, 100%) ${percent2}%, rgba(14, 50, 71, 100%) ${percent2}%)`;
+  function changeRangeValuesInHTML(input01, input02, values) {
+    values.innerText = `${input01.value} - ${input02.value}`
+  }
+
+  function fillRangeTrack(input01, input02, track){
+    let percent01 = input01.value / input01.max * 100 - RANGE_THUMB_OFFSET
+    let percent02 = input02.value / input02.max * 100 + RANGE_THUMB_OFFSET
+
+    track.style.background = `linear-gradient(to right, rgba(14, 50, 71, 50%) ${percent01}% , rgba(122, 195, 226, 100%) ${percent01}% , rgba(237, 126, 175, 100%) ${percent02}%, rgba(14, 50, 71, 100%) ${percent02}%)`
+  }
 }

@@ -1,6 +1,7 @@
 @import "reset.css";
 @import "fontawesome.css";
 @import "fonts.css";
+@import "filter.css";
 
 :root {
   --color-background: #E6E6E6;
@@ -39,6 +40,14 @@ a:focus {
   outline: none
 }
 
+input {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+input:focus, input:checked, input:hover {
+  border: none;
+}
+
 .bg-man {
   background: var(--color-man);
 }
@@ -69,171 +78,6 @@ a:focus {
   margin-left: 300px;
   transition-duration: 300ms;
 }
-
-.filter {
-
-}
-
-.filter__item {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 20px;
-  background: rgba(122, 195, 226, 10%);
-  margin-bottom: 10px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-.filter__description {
-  color: var(--color-light);
-  font-size: 14px;
-}
-
-.filter__buttons-box {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.filter__label {
-  cursor: pointer;
-  margin-left: 10px;
-  border: 1px solid rgba(255, 255, 255, 0);
-  transition-duration: 300ms;
-}
-
-.filter__label:first-child {
-  margin-left: 0;
-}
-
-.filter__input {
-  position: absolute;
-  appearance: none;
-}
-
-.filter__button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  color: var(--color-light);
-  border-radius: 10px;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0);
-  transition-duration: 300ms;
-}
-
-.filter__button:hover {
-  border: 1px solid rgba(255, 255, 255, 100);
-}
-
-.filter__input:focus ~ .filter__button {
-  border: 1px solid rgba(255, 255, 255, 100);
-}
-
-.filter__input:checked ~ .filter__button {
-  background: var(--color-primary);
-}
-
-/*RANGE*/
-
-.range {
-  position: relative;
-  width: 100%;
-  height: 30px;
-  margin-top: 16px;
-}
-
-.range__values {
-  color: var(--color-light) ;
-}
-
-input[type="range"]{
-  appearance: none;
-  width: 100%;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  background-color: transparent;
-  pointer-events: none;
-}
-
-.range__track {
-  width: 100%;
-  height: 10px;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  border-radius: 20px;
-  background: var(--color-primary);
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  -webkit-appearance: none;
-  height: 5px;
-}
-
-input[type="range"]::-moz-range-track {
-  -moz-appearance: none;
-  height: 5px;
-}
-
-input[type="range"]::-ms-track {
-  appearance: none;
-  height: 5px;
-}
-
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: var(--color-man);
-  cursor: pointer;
-  margin-top: -8px;
-  pointer-events: auto;
-}
-
-input[type="range"].range__input_02::-webkit-slider-thumb{
-  background-color: var(--color-woman);
-}
-
-input[type="range"]::-moz-range-thumb{
-  -webkit-appearance: none;
-  height: 1.7em;
-  width: 1.7em;
-  cursor: pointer;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--color-man);
-  pointer-events: auto;
-}
-
-.range__input_02::-moz-range-thumb{
-  border-radius: 50%;
-  background-color: var(--color-woman);
-}
-
-input[type="range"]::-ms-thumb{
-  appearance: none;
-  height: 1.7em;
-  width: 1.7em;
-  cursor: pointer;
-  border-radius: 50%;
-  background-color: var(--color-man);
-  pointer-events: auto;
-}
-
-.range-02::-ms-thumb{
-  border-radius: 50%;
-  background-color: var(--color-woman);
-}
-
-/*END OF RANGE*/
 
 .main {
   flex: 1 1 calc(100% - 300px);

@@ -1,22 +1,20 @@
-import Range from './range'
+import changeCustomRange from './range.js'
 
 const main = {}
 
 function initMain() {
-  console.log(main)
+  main.rangeAge01 = document.querySelector('.range__age_01')
+  main.rangeAge02 = document.querySelector('.range__age_02')
+  main.trackAge = document.querySelector('.range__age-track')
+  main.valuesAge = document.querySelector('.range__age-values')
+  main.resetFilters = document.querySelector('.filter__button_reset')
 }
 
-function initRange() {
-  const input01 = document.querySelector('.range__input_01')
-  const input02 = document.querySelector('.range__input_02')
-  const values = document.querySelector('.range__values')
-
-  const rangeByAge = new Range(input01, input02, values)
-
-  console.log(rangeByAge)
+function initAgeRange() {
+  changeCustomRange(main.rangeAge01, main.rangeAge02, main.trackAge, main.valuesAge, main.resetFilters)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
   initMain()
-  initRange()
+  initAgeRange()
 })

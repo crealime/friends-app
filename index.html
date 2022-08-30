@@ -12,7 +12,7 @@
 <body>
 <header class="header">
   <h1 class="header__title">Friends<span>App</span></h1>
-  <div class="filter">
+  <form class="filter">
     <div class="filter__item">
       <div class="filter__description">Sort by name</div>
       <div class="filter__buttons-box">
@@ -58,23 +58,24 @@
     </div>
     <div class="filter__item">
       <div class="filter__description">Filter by age</div>
-      <div class="filter__values range__values">
-        <span id="range1">0</span>
-        <span id="dash"> - </span>
-        <span id="range2">100</span>
-      </div>
+      <div class="filter__values range__age-values"></div>
       <div class="range">
-        <div class="range__track"></div>
-        <input type="range" min="0" max="100" value="0" class="range__input_01" oninput="fillRangeOne()">
-        <input type="range" min="0" max="100" value="100" class="range__input_02" oninput="fillRangeTwo()">
+        <div class="range__age-track"></div>
+        <input type="range" min="0" max="100" value="0" class="range__age_01">
+        <input type="range" min="0" max="100" value="100" class="range__age_02">
       </div>
     </div>
-  </div>
+    <div class="filter__item">
+      <label class="filter__label filter__label_reset">
+        <input type="reset" class="filter__input" value="">
+        <span class="filter__button filter__button_reset bg-man">Reset</span>
+      </label>
+    </div>
+  </form>
 </header>
 <main class="main">
 
 </main>
-<script type="module" src="js/range.js"></script>
-<script src="js/main.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
