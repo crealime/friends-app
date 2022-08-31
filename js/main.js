@@ -1,4 +1,4 @@
-import changeCustomRange from './range.js'
+import CustomRange from './range.js'
 
 const main = {}
 
@@ -14,7 +14,7 @@ function initMain() {
 }
 
 function initAgeRange() {
-  changeCustomRange(main.rangeAge01, main.rangeAge02, main.trackAge, main.valuesAge, main.formFilters, main.colorPrimary, main.colorMan, main.colorWoman)
+  new CustomRange(main.rangeAge01, main.rangeAge02, main.trackAge, main.valuesAge, main.formFilters, main.colorPrimary, main.colorMan, main.colorWoman)
 }
 
 window.addEventListener('load', function() {

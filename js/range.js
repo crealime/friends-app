@@ -1,46 +1,58 @@
-export default function changeCustomRange(input01, input02, track, values, form, colorPrimary, colorMan, colorWoman) {
-  const RANGE_THUMB_OFFSET = 2
-  const inputs = new Map()
+export default class CustomRange {
+  constructor(input01, input02, track, values, form, colorPrimary, colorMan, colorWoman) {
+    this.input01 = input01
+    this.input02 = input02
+    this.track = track
+    this.values = values
+    this.form = form
+    this.colorPrimary = colorPrimary
+    this.colorMan = colorMan
+    this.colorWoman = colorWoman
+    this.gradienrOffset = 2
 
-  inputs.set(input01, input02)
-  inputs.set(input02, input01)
+    this.inputs = new Map()
+    this.inputs.set(input01, input02)
+    this.inputs.set(input02, input01)
 
-  changeRangeValuesInHTML(input01, input02, values)
-  fillRangeTrack(input01, input02, track)
+    // First changes
+    this.changeRangeValuesInHTML(this.input01, this.input02, this.values)
+    this.fillRangeTrack(this.input01, this.input02, this.track)
 
-  form.addEventListener('reset', function() {
-    setTimeout(() => {
-      changeRangeValuesInHTML(input01, input02, values)
-      fillRangeTrack(input01, input02, track)}, 10)
-  })
+    // Listeners
+    this.form.addEventListener('reset', () => {
+      setTimeout(() => {
+        this.changeRangeValuesInHTML()
+        this.fillRangeTrack()}, 10)
+    })
 
-  input01.addEventListener('input', function() {
-    changeCustomRange(this)
-  })
+    this.input01.addEventListener('input', (e) => {
+      this.changeCustomRange(e.target)
+    })
 
-  input02.addEventListener('input', function() {
-    changeCustomRange(this)
-  })
+    this.input02.addEventListener('input', (e) => {
+      this.changeCustomRange(e.target)
+    })
+  }
 
-  function changeCustomRange(that) {
-    if (+input01.value <= +input02.value) {
-      input01.style.zIndex = '1'
-      input02.style.zIndex = '1'
+  // Methods
+  changeCustomRange(that) {
+    if (+this.input01.value <= +this.input02.value) {
+      this.inputs.get(that).style.zIndex = '1'
       that.style.zIndex = '2'
-      changeRangeValuesInHTML(input01, input02, values)
-      fillRangeTrack(input01, input02, track)
+      this.changeRangeValuesInHTML()
+      this.fillRangeTrack()
     }
-    else that.value = inputs.get(that).value
+    else that.value = this.inputs.get(that).value
   }
 
-  function changeRangeValuesInHTML(input01, input02, values) {
-    values.innerText = `${input01.value} - ${input02.value}`
+  changeRangeValuesInHTML() {
+    this.values.innerText = `${this.input01.value} - ${this.input02.value}`
   }
 
-  function fillRangeTrack(input01, input02, track){
-    let percent01 = input01.value / input01.max * 100 - RANGE_THUMB_OFFSET
-    let percent02 = input02.value / input02.max * 100 + RANGE_THUMB_OFFSET
+  fillRangeTrack(){
+    let percent01 = this.input01.value / this.input01.max * 100 - this.gradienrOffset
+    let percent02 = this.input02.value / this.input02.max * 100 + this.gradienrOffset
 
-    track.style.background = `linear-gradient(to right, ${colorPrimary} ${percent01}% , ${colorMan} ${percent01}% , ${colorWoman} ${percent02}%, ${colorPrimary} ${percent02}%)`
+    this.track.style.background = `linear-gradient(to right, ${this.colorPrimary} ${percent01}% , ${this.colorMan} ${percent01}% , ${this.colorWoman} ${percent02}%, ${this.colorPrimary} ${percent02}%)`
   }
 }
