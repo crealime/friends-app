@@ -78,7 +78,7 @@
   background: var(--color-primary);
 }
 
-/*RANGE*/
+/*CUSTOM RANGE*/
 
 .range {
   position: relative;
@@ -203,4 +203,4 @@ input[type="range"].range-02::-ms-thumb {
   transform: translateX(5px);
 }
 
-/*END OF RANGE*/
+/*END OF CUSTOM RANGE*/

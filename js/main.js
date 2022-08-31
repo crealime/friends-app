@@ -1,4 +1,5 @@
 import CustomRange from './range.js'
+import api from './api.js'
 
 const main = {}
 
@@ -20,4 +21,6 @@ function initAgeRange() {
 window.addEventListener('load', function() {
   initMain()
   initAgeRange()
+  api.getPersonData().then(response => console.log(response))
+  // console.log(main.persons)
 })
