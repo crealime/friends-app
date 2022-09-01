@@ -1,0 +1,48 @@
+.friends {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-gap: 16px;
+}
+
+.card {
+  text-align: center;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--color-light);
+}
+
+.card__header, .card__footer {
+  height: 50px;
+  padding: 0 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--color-light);
+  background: var(--color-man);
+}
+
+.card__img {
+  width: 100px;
+  outline: none;
+  border-radius: 50%;
+  margin-top: -10px;
+  margin-bottom: 16px;
+}
+
+.card__name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.card__contacts {
+  margin-bottom: 16px
+}
+
+
+
+.color-woman {
+
+}

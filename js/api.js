@@ -5,7 +5,7 @@ class Api {
     this.url = url
   }
 
-  async getPersonData() {
+  async getData() {
     try {
       return await fetch(this.url)
         .then(response => response.json())
