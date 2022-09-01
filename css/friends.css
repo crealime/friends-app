@@ -86,7 +86,11 @@
   }
 }
 
-
-.color-woman {
-
+.color-female .card__header, .color-female .card__footer {
+  background: var(--color-woman);
 }
+
+.color-female .card__button, .color-female .card__button {
+  color: var(--color-woman);
+}
+

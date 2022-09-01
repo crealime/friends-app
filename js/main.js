@@ -17,6 +17,8 @@ function initMain() {
   glob.preloader = document.querySelector('.preloader')
   glob.friendsContainer = document.querySelector('.friends')
   glob.main = document.querySelector('.main')
+  glob.inputs = document.querySelectorAll('input')
+
   glob.colorPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-primary')
   glob.colorMan = getComputedStyle(document.documentElement).getPropertyValue('--color-man')
   glob.colorWoman = getComputedStyle(document.documentElement).getPropertyValue('--color-woman')
@@ -30,6 +32,20 @@ function initMain() {
   glob.reloadData.addEventListener('click', function(e) {
     e.preventDefault()
     glob.reloadDataIcon.classList.toggle('rotate-360')
+  })
+
+  glob.formFilters.addEventListener('change', function(e) {
+    if (e.target.name === 'by-age') glob.inputs.forEach(input => {
+      if (input.name === 'by-name') input.checked = false
+    })
+    if (e.target.name === 'by-name') glob.inputs.forEach(input => {
+      if (input.name === 'by-age') input.checked = false
+    })
+    glob.friends.filterFriends(glob.inputs)
+  })
+
+  glob.formFilters.addEventListener('reset', function() {
+    glob.friends.filterFriends()
   })
 }
 
@@ -51,18 +67,17 @@ function fadeOut(element, duration, delay) {
   })
 }
 
+
 window.addEventListener('load', function() {
   initMain()
   initAgeRange()
   store.init().then(() => {
     console.log(store.persons)
-    const friends = new Friends(store.persons, glob.friendsContainer)
-    friends.renderFriends()
-  })
-
-  glob.formFilters.addEventListener('click', () => {
-    console.log(store.getFemale())
+    glob.friends = new Friends(store.persons, glob.friendsContainer)
+    glob.friends.renderFriends()
   })
 
   fadeOut(glob.preloader, 300, 500)
 })
+
+setTimeout(() => fadeOut(glob.preloader, 300, 500), 3000)
