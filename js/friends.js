@@ -5,7 +5,12 @@ export default class Friends {
     this.container = container
   }
 
-  filterFriends(inputs = []) {
+  reloadPersons(persons) {
+    this.persons = persons
+    this.personsEdit = this.persons
+  }
+
+  filterFriends(inputs = [], substring = '') {
     this.personsEdit = this.persons
 
     inputs.forEach(input => {
@@ -32,6 +37,8 @@ export default class Friends {
       }
     })
 
+    if (substring) this.personsEdit = this.personsEdit.filter(person => `${person.name.first} ${person.name.last}`.toLowerCase().includes(substring.toLowerCase()))
+
     this.renderFriends(this.personsEdit)
   }
 
@@ -41,14 +48,14 @@ export default class Friends {
     let fragment = ''
 
     persons.forEach(el => {
-      const friend = this.cardTemplate(el)
+      const friend = this.getCardTemplate(el)
       fragment += friend
     })
 
     this.container.innerHTML = fragment
   }
 
-  cardTemplate(person) {
+  getCardTemplate(person) {
     return `
       <div class="card color-${person.gender}">
         <div class="card__header">

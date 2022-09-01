@@ -18,6 +18,7 @@ function initMain() {
   glob.friendsContainer = document.querySelector('.friends')
   glob.main = document.querySelector('.main')
   glob.inputs = document.querySelectorAll('input')
+  glob.search = document.querySelector('.top-menu__search')
 
   glob.colorPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-primary')
   glob.colorMan = getComputedStyle(document.documentElement).getPropertyValue('--color-man')
@@ -32,6 +33,10 @@ function initMain() {
   glob.reloadData.addEventListener('click', function(e) {
     e.preventDefault()
     glob.reloadDataIcon.classList.toggle('rotate-360')
+    store.init().then(() => {
+      glob.friends.reloadPersons(store.persons)
+      glob.friends.filterFriends(glob.inputs, glob.search.value)
+    })
   })
 
   glob.formFilters.addEventListener('change', function(e) {
@@ -41,11 +46,15 @@ function initMain() {
     if (e.target.name === 'by-name') glob.inputs.forEach(input => {
       if (input.name === 'by-age') input.checked = false
     })
-    glob.friends.filterFriends(glob.inputs)
+    glob.friends.filterFriends(glob.inputs, glob.search.value)
   })
 
   glob.formFilters.addEventListener('reset', function() {
-    glob.friends.filterFriends()
+    glob.friends.filterFriends([], glob.search.value)
+  })
+
+  glob.search.addEventListener('input', function(e) {
+    glob.friends.filterFriends(glob.inputs, e.target.value)
   })
 }
 
@@ -72,7 +81,7 @@ window.addEventListener('load', function() {
   initMain()
   initAgeRange()
   store.init().then(() => {
-    console.log(store.persons)
+    // console.log(store.persons)
     glob.friends = new Friends(store.persons, glob.friendsContainer)
     glob.friends.renderFriends()
   })
