@@ -1,5 +1,5 @@
 const config = {
-  url: 'https://randomuser.me/api/?results=100&nat=us,fr,gb,ua,ca,de'
+  url: 'https://randomuser.me/api/?results=100'
 }
 
 export default config
