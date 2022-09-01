@@ -1,5 +1,6 @@
 import CustomRange from './range.js'
 import store from './store.js'
+import Friends from './friends.js'
 
 const glob = {}
 
@@ -14,6 +15,7 @@ function initMain() {
   glob.reloadData = document.querySelector('.top-menu__reload-data')
   glob.reloadDataIcon = document.querySelector('.top-menu__reload-data-icon')
   glob.preloader = document.querySelector('.preloader')
+  glob.friendsContainer = document.querySelector('.friends')
   glob.main = document.querySelector('.main')
   glob.colorPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-primary')
   glob.colorMan = getComputedStyle(document.documentElement).getPropertyValue('--color-man')
@@ -52,9 +54,11 @@ function fadeOut(element, duration, delay) {
 window.addEventListener('load', function() {
   initMain()
   initAgeRange()
-  // store.init().then(() => {
-  //   console.log(store.persons)
-  // })
+  store.init().then(() => {
+    console.log(store.persons)
+    const friends = new Friends(store.persons, glob.friendsContainer)
+    friends.renderFriends()
+  })
 
   glob.formFilters.addEventListener('click', () => {
     console.log(store.getFemale())

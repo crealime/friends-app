@@ -8,7 +8,6 @@
 :root {
   --color-background: #E6E6E6;
   --color-light: #FFFFFF;
-  --color-background-card: #FFFFFF;
   --color-primary: #0E3247;
   --color-man: #7AC3E2;
   --color-man-hover: #56A4C4;
@@ -28,6 +27,7 @@ body {
   color: var(--color-primary);
   padding: 10px;
   user-select: none;
+  line-height: 1.5
 }
 * {
   box-sizing: border-box;
@@ -96,7 +96,7 @@ input:focus, input:checked, input:hover {
   width: 100vw;
   height: 100vh;
   z-index: 99;
-  background: var(--color-background);
+  background: var(--color-primary);
 }
 
 .preloader__rotate {
