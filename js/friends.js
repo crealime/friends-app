@@ -1,17 +1,17 @@
 export default class Friends {
   constructor(persons, container) {
     this.persons = persons
-    this.personsEdit = this.persons
+    this.personsEdit = [...this.persons]
     this.container = container
   }
 
   reloadPersons(persons) {
     this.persons = persons
-    this.personsEdit = this.persons
+    this.personsEdit = [...this.persons]
   }
 
   filterFriends(inputs = [], substring = '') {
-    this.personsEdit = this.persons
+    this.personsEdit = [...this.persons]
 
     inputs.forEach(input => {
       if (input.name === 'age-min') {
