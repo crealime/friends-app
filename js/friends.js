@@ -10,6 +10,37 @@ export default class Friends {
     this.personsEdit = [...this.persons]
   }
 
+  filterFriendsByURL() {
+    this.personsEdit = [...this.persons]
+    const params = (new URL(document.location).searchParams)
+    if (params.get('age-min')) {
+      this.personsEdit = this.personsEdit.filter(person => person.dob.age >= params.get('age-min'))
+    }
+    if (params.get('age-max')) {
+      this.personsEdit = this.personsEdit.filter(person => person.dob.age <= params.get('age-max'))
+    }
+    if (params.get('by-age') === 'up') {
+      this.personsEdit = this.personsEdit.sort((a, b) => a.dob.age - b.dob.age)
+    }
+    if (params.get('by-age') === 'down') {
+      this.personsEdit = this.personsEdit.sort((a, b) => b.dob.age - a.dob.age)
+    }
+    if (params.get('by-name') === 'up') {
+      this.personsEdit = this.personsEdit.sort((a, b) => a.name.first > b.name.first ? 1 : -1)
+    }
+    if (params.get('by-name') === 'down') {
+      this.personsEdit = this.personsEdit.sort((a, b) => a.name.first < b.name.first ? 1 : -1)
+    }
+    if (params.get('by-gender') && params.get('by-gender') !== 'all') {
+      this.personsEdit = this.personsEdit.filter(person => person.gender === params.get('by-gender'))
+    }
+    if (params.get('is-name')) {
+      this.personsEdit = this.personsEdit.filter(person => `${person.name.first} ${person.name.last}`.toLowerCase().includes(params.get('is-name').toLowerCase()))
+    }
+
+    this.renderFriends(this.personsEdit)
+  }
+
   filterFriends(inputs = [], substring = '') {
     this.personsEdit = [...this.persons]
 
@@ -45,19 +76,14 @@ export default class Friends {
   renderFriends(persons = this.personsEdit) {
     this.container.innerHTML = ''
 
-    let fragment = ''
-
-    persons.forEach(el => {
-      const friend = this.getCardTemplate(el)
-      fragment += friend
-    })
-
-    this.container.innerHTML = fragment
+    this.container.innerHTML = persons.reduce((acc, el) => {
+      return acc + this.getCardTemplate(el)
+    }, '')
   }
 
   getCardTemplate(person) {
     return `
-      <div class="card color-${person.gender}">
+      <div data-id="${person.login.md5}" class="card color-${person.gender}">
         <div class="card__header">
           <div class="card__nick">${person.login.password}</div>
           <div class="card__age">${person.dob.age}</div>
@@ -72,17 +98,11 @@ export default class Friends {
           </div>
         </div>
         <div class="card__footer">
-          <button class="card__button card__delete">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
           <div class="card__gender">
             ${person.gender === 'male' 
               ? '<i class="fa-solid fa-mars"></i>'
               : '<i class="fa-solid fa-venus"></i>'}
           </div>
-          <button class="card__button card__delete">
-            <i class="fa-solid fa-check"></i>
-          </button>
         </div>
       </div>
     `

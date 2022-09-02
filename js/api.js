@@ -18,10 +18,6 @@ class Api {
   }
 }
 
-const api = new Api(config.url)
+const api = new Api(config.getUrl())
 
 export default api
-
-
-
-

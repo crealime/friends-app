@@ -5,6 +5,7 @@ import Friends from './friends.js'
 const glob = {}
 
 function initMain() {
+  glob.baseURL = new URL(window.location)
   glob.rangeAge01 = document.querySelector('.range__age_01')
   glob.rangeAge02 = document.querySelector('.range__age_02')
   glob.trackAge = document.querySelector('.range__age-track')
@@ -40,22 +41,79 @@ function initMain() {
   })
 
   glob.formFilters.addEventListener('change', function(e) {
+
     if (e.target.name === 'by-age') glob.inputs.forEach(input => {
       if (input.name === 'by-name') input.checked = false
     })
     if (e.target.name === 'by-name') glob.inputs.forEach(input => {
       if (input.name === 'by-age') input.checked = false
     })
-    glob.friends.filterFriends(glob.inputs, glob.search.value)
+
+    if (e.target.name) updateURL(e.target.name, e.target.value)
+
+    glob.friends.filterFriendsByURL()
+    // glob.friends.filterFriends(glob.inputs, glob.search.value)
   })
 
   glob.formFilters.addEventListener('reset', function() {
-    glob.friends.filterFriends([], glob.search.value)
+    resetURL()
+    glob.friends.filterFriendsByURL()
+    // glob.friends.filterFriends([], glob.search.value)
   })
 
   glob.search.addEventListener('input', function(e) {
-    glob.friends.filterFriends(glob.inputs, e.target.value)
+    updateURL(e.target.name, e.target.value)
+
+    glob.friends.filterFriendsByURL()
+    // glob.friends.filterFriends(glob.inputs, e.target.value)
   })
+}
+
+function setInputs() {
+  const params = (new URL(document.location).searchParams)
+
+  if (params.get('age-min')) {
+    document.querySelector('input[name="age-min"]').value = params.get('age-min')
+  }
+  if (params.get('age-max')) {
+    document.querySelector('input[name="age-max"]').value = params.get('age-max')
+  }
+  if (params.get('by-age') === 'up') {
+    document.querySelector('input[name="by-age"][value="up"]').checked = true
+  }
+  if (params.get('by-age') === 'down') {
+    document.querySelector('input[name="by-age"][value="down"]').checked = true
+  }
+  if (params.get('by-name') === 'up') {
+    document.querySelector('input[name="by-name"][value="up"]').checked = true
+  }
+  if (params.get('by-name') === 'down') {
+    document.querySelector('input[name="by-name"][value="down"]').checked = true
+  }
+  if (params.get('by-gender') === 'all') {
+    document.querySelector('input[name="by-gender"][value="all"]').checked = true
+  }
+  if (params.get('by-gender') === 'male') {
+    document.querySelector('input[name="by-gender"][value="male"]').checked = true
+  }
+  if (params.get('by-gender') === 'female') {
+    document.querySelector('input[name="by-gender"][value="female"]').checked = true
+  }
+  if (params.get('is-name')) {
+    document.querySelector('input[name="is-name"]').value = params.get('is-name')
+  }
+}
+
+function updateURL(param, value) {
+  if (param === 'by-age') glob.baseURL.searchParams.delete('by-name')
+  if (param === 'by-name') glob.baseURL.searchParams.delete('by-age')
+
+  glob.baseURL.searchParams.set(param, value)
+  history.replaceState(null, null, glob.baseURL)
+}
+
+function resetURL() {
+  history.replaceState(null, null, window.location.origin + window.location.pathname)
 }
 
 function initAgeRange() {
@@ -76,14 +134,14 @@ function fadeOut(element, duration, delay) {
   })
 }
 
-
 window.addEventListener('load', function() {
   initMain()
+  setInputs()
   initAgeRange()
   store.init().then(() => {
-    // console.log(store.persons)
+    console.log(store.persons)
     glob.friends = new Friends(store.persons, glob.friendsContainer)
-    glob.friends.renderFriends()
+    glob.friends.filterFriendsByURL()
   })
 
   fadeOut(glob.preloader, 300, 500)

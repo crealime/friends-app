@@ -29,6 +29,7 @@
 }
 
 .card__footer {
+  justify-content: center;
   position: relative;
   font-size: 20px;
   bottom: 0;
