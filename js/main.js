@@ -2,6 +2,7 @@ import CustomRange from './range.js'
 import store from './store.js'
 import Friends from './friends.js'
 import Pagination from './pagination.js'
+import Filters from "./filters.js";
 
 const glob = {}
 
@@ -45,75 +46,6 @@ function initGlob() {
       glob.friends.filterFriendsByURL(glob.baseURL)
     })
   })
-
-  glob.formFilters.addEventListener('change', function(e) {
-
-    if (e.target.name === 'by-age') glob.inputs.forEach(input => {
-      if (input.name === 'by-name') input.checked = false
-    })
-    if (e.target.name === 'by-name') glob.inputs.forEach(input => {
-      if (input.name === 'by-age') input.checked = false
-    })
-
-    if (e.target.name) updateURL(e.target.name, e.target.value)
-
-    glob.friends.filterFriendsByURL(glob.baseURL)
-  })
-
-  glob.formFilters.addEventListener('reset', function() {
-    resetURL()
-    glob.friends.filterFriendsByURL(glob.baseURL)
-  })
-
-  glob.search.addEventListener('input', function(e) {
-    updateURL(e.target.name, e.target.value)
-    glob.friends.filterFriendsByURL(glob.baseURL)
-  })
-}
-
-function setInputs() {
-  const params = glob.baseURL.searchParams
-
-  for (let p of params) {
-    if (p[0] === 'page') {
-      glob.currentPage = p[1]
-    }
-    if (p[0] === 'age-min' || p[0] === 'age-man' || p[0] === 'is-name') {
-      document.querySelector(`input[name="${p[0]}"]`).value = p[1]
-    }
-    else if (p[1] === 'up') {
-      document.querySelector(`input[name="${p[0]}"][value="up"]`).checked = true
-    }
-    else if (p[1] === 'down') {
-      document.querySelector(`input[name="${p[0]}"][value="down"]`).checked = true
-    }
-    else if (p[1] === 'all') {
-      document.querySelector(`input[name="${p[0]}"][value="all"]`).checked = true
-    }
-    else if (p[1] === 'male') {
-      document.querySelector(`input[name="${p[0]}"][value="male"]`).checked = true
-    }
-    else if (p[1] === 'female') {
-      document.querySelector(`input[name="${p[0]}"][value="female"]`).checked = true
-    }
-  }
-}
-
-function updateURL(param, value) {
-  if (param === 'by-age') glob.baseURL.searchParams.delete('by-name')
-  if (param === 'by-name') glob.baseURL.searchParams.delete('by-age')
-  glob.baseURL.searchParams.set(param, value)
-  if (param === 'is-name' && value.length === 0) glob.baseURL.searchParams.delete('is-name')
-  history.replaceState(null, null, glob.baseURL)
-}
-
-function resetURL() {
-  glob.baseURL.searchParams.delete('by-name')
-  glob.baseURL.searchParams.delete('by-age')
-  glob.baseURL.searchParams.delete('by-gender')
-  glob.baseURL.searchParams.delete('age-min')
-  glob.baseURL.searchParams.delete('age-max')
-  history.replaceState(null, null, glob.baseURL)
 }
 
 function initAgeRange() {
@@ -145,9 +77,13 @@ function initFriends() {
   })
 }
 
+function initFilters() {
+  glob.filters = new Filters(glob)
+}
+
 window.addEventListener('load', function() {
   initGlob()
-  setInputs()
+  initFilters()
   initAgeRange()
   initFriends()
   initPagination()
