@@ -62,7 +62,8 @@ export default class Filters {
     if (param === 'by-name') this.glob.baseURL.searchParams.delete('by-age')
     this.glob.baseURL.searchParams.set(param, value)
     if (param === 'is-name' && value.length === 0) this.glob.baseURL.searchParams.delete('is-name')
-    history.replaceState(null, null, this.glob.baseURL)
+    history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
+    console.log(this.glob.baseURL)
   }
 
   resetURL() {
@@ -71,7 +72,7 @@ export default class Filters {
     this.glob.baseURL.searchParams.delete('by-gender')
     this.glob.baseURL.searchParams.delete('age-min')
     this.glob.baseURL.searchParams.delete('age-max')
-    history.replaceState(null, null, this.glob.baseURL)
+    history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
   }
 
   filterFriendsByURL(url) {

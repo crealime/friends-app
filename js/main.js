@@ -7,7 +7,7 @@ import Filters from "./filters.js";
 const glob = {}
 
 function initGlob() {
-  glob.baseURL = new URL(window.location)
+  glob.baseURL = new URL(window.location.href)
   glob.cardsOnPage = 24
   glob.duration = 300
   glob.currentPage = glob.baseURL.searchParams.get('page') || 1
@@ -87,12 +87,22 @@ function initFilters() {
   glob.filters = new Filters(glob)
 }
 
+function initHistory() {
+  window.addEventListener('popstate', (e) => {
+    console.log(e)
+    glob.baseURL = new URL(e.state.href)
+    glob.filters.filterFriendsByURL(glob.baseURL)
+    glob.filters.setInputs()
+  })
+}
+
 window.addEventListener('load', function() {
   initGlob()
   initFilters()
   initAgeRange()
   initFriends()
   initPagination()
+  initHistory()
   fadeOut(glob.preloader, 300, 500)
 })
 
