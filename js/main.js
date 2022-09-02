@@ -67,7 +67,6 @@ function initGlob() {
 
   glob.search.addEventListener('input', function(e) {
     updateURL(e.target.name, e.target.value)
-
     glob.friends.filterFriendsByURL(glob.baseURL)
   })
 }
@@ -75,38 +74,28 @@ function initGlob() {
 function setInputs() {
   const params = glob.baseURL.searchParams
 
-  if (params.get('age-min')) {
-    document.querySelector('input[name="age-min"]').value = params.get('age-min')
-  }
-  if (params.get('age-max')) {
-    document.querySelector('input[name="age-max"]').value = params.get('age-max')
-  }
-  if (params.get('by-age') === 'up') {
-    document.querySelector('input[name="by-age"][value="up"]').checked = true
-  }
-  if (params.get('by-age') === 'down') {
-    document.querySelector('input[name="by-age"][value="down"]').checked = true
-  }
-  if (params.get('by-name') === 'up') {
-    document.querySelector('input[name="by-name"][value="up"]').checked = true
-  }
-  if (params.get('by-name') === 'down') {
-    document.querySelector('input[name="by-name"][value="down"]').checked = true
-  }
-  if (params.get('by-gender') === 'all') {
-    document.querySelector('input[name="by-gender"][value="all"]').checked = true
-  }
-  if (params.get('by-gender') === 'male') {
-    document.querySelector('input[name="by-gender"][value="male"]').checked = true
-  }
-  if (params.get('by-gender') === 'female') {
-    document.querySelector('input[name="by-gender"][value="female"]').checked = true
-  }
-  if (params.get('is-name')) {
-    document.querySelector('input[name="is-name"]').value = params.get('is-name')
-  }
-  if (params.get('page')) {
-    glob.currentPage = params.get('page')
+  for (let p of params) {
+    if (p[0] === 'page') {
+      glob.currentPage = p[1]
+    }
+    if (p[0] === 'age-min' || p[0] === 'age-man' || p[0] === 'is-name') {
+      document.querySelector(`input[name="${p[0]}"]`).value = p[1]
+    }
+    else if (p[1] === 'up') {
+      document.querySelector(`input[name="${p[0]}"][value="up"]`).checked = true
+    }
+    else if (p[1] === 'down') {
+      document.querySelector(`input[name="${p[0]}"][value="down"]`).checked = true
+    }
+    else if (p[1] === 'all') {
+      document.querySelector(`input[name="${p[0]}"][value="all"]`).checked = true
+    }
+    else if (p[1] === 'male') {
+      document.querySelector(`input[name="${p[0]}"][value="male"]`).checked = true
+    }
+    else if (p[1] === 'female') {
+      document.querySelector(`input[name="${p[0]}"][value="female"]`).checked = true
+    }
   }
 }
 

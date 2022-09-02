@@ -4,6 +4,7 @@
 @import "filter.css";
 @import "menu.css";
 @import "friends.css";
+@import "pagination.css";
 
 :root {
   --color-background: #E6E6E6;
@@ -69,6 +70,15 @@ input {
 
 input:focus, input:checked, input:hover {
   border: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 .bg-man {
@@ -160,51 +170,6 @@ input:focus, input:checked, input:hover {
 
 .rotate-360 {
   transform: rotate(360deg);
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 50px 0 30px;
-}
-
-.pagination__input {
-  text-align: center;
-  width: 60px;
-  height: 40px;
-  font-size: 18px;
-  border-radius: 10px;
-  border: none;
-  color: var(--color-primary);
-}
-
-.pagination__button {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 16px;
-  font-size: 20px;
-  color: var(--color-light);
-  background: var(--color-man);
-  border-radius: 10px;
-  transition-duration: 300ms;
-}
-
-.pagination__button:focus, .pagination__button:hover {
-  background: var(--color-man-hover);
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-input[type='number'] {
-  -moz-appearance: textfield;
 }
 
 @media screen and (max-width: 992px) {
