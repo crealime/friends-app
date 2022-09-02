@@ -9,6 +9,7 @@ const glob = {}
 function initGlob() {
   glob.baseURL = new URL(window.location)
   glob.cardsOnPage = 24
+  glob.duration = 300
   glob.currentPage = glob.baseURL.searchParams.get('page') || 1
   glob.rangeAge01 = document.querySelector('.range__age_01')
   glob.rangeAge02 = document.querySelector('.range__age_02')
@@ -40,12 +41,17 @@ function initGlob() {
 
   glob.reloadData.addEventListener('click', function(e) {
     e.preventDefault()
-    glob.reloadDataIcon.classList.toggle('rotate-360')
+    glob.toggleClass(glob.reloadDataIcon, 'rotate-360')
+    setTimeout(() => {glob.toggleClass(glob.reloadDataIcon, 'rotate-360')}, 300)
     store.init().then(() => {
       glob.friends.reloadPersons(store.persons)
-      glob.friends.filterFriendsByURL(glob.baseURL)
+      glob.filters.filterFriendsByURL(glob.baseURL)
     })
   })
+}
+
+glob.toggleClass = function(tElement, tClass) {
+  tElement.classList.toggle(tClass)
 }
 
 function initAgeRange() {
@@ -73,7 +79,7 @@ function initPagination() {
 function initFriends() {
   store.init().then(() => {
     glob.friends = new Friends(store.persons, glob)
-    glob.friends.filterFriendsByURL(glob.baseURL)
+    glob.filters.filterFriendsByURL(glob.baseURL)
   })
 }
 

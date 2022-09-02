@@ -13,17 +13,17 @@ export default class Filters {
 
       if (e.target.name) this.updateURL(e.target.name, e.target.value)
 
-      this.glob.friends.filterFriendsByURL(this.glob.baseURL)
+      this.filterFriendsByURL(this.glob.baseURL)
     })
 
     this.glob.formFilters.addEventListener('reset', () => {
       this.resetURL()
-      this.glob.friends.filterFriendsByURL(this.glob.baseURL)
+      this.filterFriendsByURL(this.glob.baseURL)
     })
 
     this.glob.search.addEventListener('input', (e) => {
       this.updateURL(e.target.name, e.target.value)
-      this.glob.friends.filterFriendsByURL(this.glob.baseURL)
+      this.filterFriendsByURL(this.glob.baseURL)
     })
 
     this.setInputs()
@@ -72,5 +72,39 @@ export default class Filters {
     this.glob.baseURL.searchParams.delete('age-min')
     this.glob.baseURL.searchParams.delete('age-max')
     history.replaceState(null, null, this.glob.baseURL)
+  }
+
+  filterFriendsByURL(url) {
+    this.glob.friends.personsEdit = [...this.glob.friends.persons]
+    const params = url.searchParams
+
+    for (let p of params) {
+      if (p[0] === 'age-min') {
+        this.glob.friends.personsEdit = this.glob.friends.personsEdit.filter(person => person.dob.age >= p[1])
+      }
+      if (p[0] === 'age-max') {
+        this.glob.friends.personsEdit = this.glob.friends.personsEdit.filter(person => person.dob.age <= p[1])
+      }
+      if (p[0] === 'by-age') {
+        if (p[1] === 'up') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.dob.age - b.dob.age)
+        if (p[1] === 'down') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => b.dob.age - a.dob.age)
+      }
+      if (p[0] === 'by-name') {
+        if (p[1] === 'up') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.name.first > b.name.first ? 1 : -1)
+        if (p[1] === 'down') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.name.first < b.name.first ? 1 : -1)
+      }
+      if (p[0] === 'by-gender' && p[1] !== 'all') {
+        this.glob.friends.personsEdit = this.glob.friends.personsEdit.filter(person => person.gender === p[1])
+      }
+      if (p[0] === 'is-name') {
+        this.glob.friends.personsEdit = this.glob.friends.personsEdit.filter(person => `${person.name.first} ${person.name.last}`.toLowerCase().includes(p[1].toLowerCase()))
+      }
+    }
+
+    if (this.glob.currentPage > this.glob.friends.personsEdit.length / this.glob.cardsOnPage) {
+      this.glob.pagination.changePage(Math.ceil(this.glob.friends.personsEdit.length / this.glob.cardsOnPage))
+    }
+
+    this.glob.friends.renderFriends(this.glob.friends.personsEdit)
   }
 }

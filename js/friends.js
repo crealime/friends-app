@@ -10,48 +10,51 @@ export default class Friends {
     this.personsEdit = [...this.persons]
   }
 
-  filterFriendsByURL(url) {
-    this.personsEdit = [...this.persons]
-    const params = url.searchParams
-
-    if (params.get('age-min')) {
-      this.personsEdit = this.personsEdit.filter(person => person.dob.age >= params.get('age-min'))
-    }
-    if (params.get('age-max')) {
-      this.personsEdit = this.personsEdit.filter(person => person.dob.age <= params.get('age-max'))
-    }
-    if (params.get('by-age') === 'up') {
-      this.personsEdit = this.personsEdit.sort((a, b) => a.dob.age - b.dob.age)
-    }
-    if (params.get('by-age') === 'down') {
-      this.personsEdit = this.personsEdit.sort((a, b) => b.dob.age - a.dob.age)
-    }
-    if (params.get('by-name') === 'up') {
-      this.personsEdit = this.personsEdit.sort((a, b) => a.name.first > b.name.first ? 1 : -1)
-    }
-    if (params.get('by-name') === 'down') {
-      this.personsEdit = this.personsEdit.sort((a, b) => a.name.first < b.name.first ? 1 : -1)
-    }
-    if (params.get('by-gender') && params.get('by-gender') !== 'all') {
-      this.personsEdit = this.personsEdit.filter(person => person.gender === params.get('by-gender'))
-    }
-    if (params.get('is-name')) {
-      this.personsEdit = this.personsEdit.filter(person => `${person.name.first} ${person.name.last}`.toLowerCase().includes(params.get('is-name').toLowerCase()))
-    }
-
-    if (this.glob.currentPage > this.personsEdit.length / this.glob.cardsOnPage) {
-      this.glob.pagination.changePage(Math.ceil(this.personsEdit.length / this.glob.cardsOnPage))
-    }
-
-    this.renderFriends(this.personsEdit)
-  }
+  // filterFriendsByURL(url) {
+  //   this.personsEdit = [...this.persons]
+  //   const params = url.searchParams
+  //
+  //   if (params.get('age-min')) {
+  //     this.personsEdit = this.personsEdit.filter(person => person.dob.age >= params.get('age-min'))
+  //   }
+  //   if (params.get('age-max')) {
+  //     this.personsEdit = this.personsEdit.filter(person => person.dob.age <= params.get('age-max'))
+  //   }
+  //   if (params.get('by-age') === 'up') {
+  //     this.personsEdit = this.personsEdit.sort((a, b) => a.dob.age - b.dob.age)
+  //   }
+  //   if (params.get('by-age') === 'down') {
+  //     this.personsEdit = this.personsEdit.sort((a, b) => b.dob.age - a.dob.age)
+  //   }
+  //   if (params.get('by-name') === 'up') {
+  //     this.personsEdit = this.personsEdit.sort((a, b) => a.name.first > b.name.first ? 1 : -1)
+  //   }
+  //   if (params.get('by-name') === 'down') {
+  //     this.personsEdit = this.personsEdit.sort((a, b) => a.name.first < b.name.first ? 1 : -1)
+  //   }
+  //   if (params.get('by-gender') && params.get('by-gender') !== 'all') {
+  //     this.personsEdit = this.personsEdit.filter(person => person.gender === params.get('by-gender'))
+  //   }
+  //   if (params.get('is-name')) {
+  //     this.personsEdit = this.personsEdit.filter(person => `${person.name.first} ${person.name.last}`.toLowerCase().includes(params.get('is-name').toLowerCase()))
+  //   }
+  //
+  //   if (this.glob.currentPage > this.personsEdit.length / this.glob.cardsOnPage) {
+  //     this.glob.pagination.changePage(Math.ceil(this.personsEdit.length / this.glob.cardsOnPage))
+  //   }
+  //
+  //   this.renderFriends(this.personsEdit)
+  // }
 
   renderFriends(persons = this.personsEdit, page = this.glob.currentPage) {
-    this.glob.friendsContainer.innerHTML = ''
-
-    this.glob.friendsContainer.innerHTML = persons.slice((page - 1) * this.glob.cardsOnPage, page * this.glob.cardsOnPage).reduce((acc, el) => {
-      return acc + this.getCardTemplate(el)
-    }, '')
+    this.glob.friendsContainer.classList.toggle('opacity-0')
+    setTimeout(() => {
+      this.glob.friendsContainer.innerHTML = ''
+      this.glob.friendsContainer.innerHTML = persons.slice((page - 1) * this.glob.cardsOnPage, page * this.glob.cardsOnPage).reduce((acc, el) => {
+        return acc + this.getCardTemplate(el)
+      }, '')
+      this.glob.friendsContainer.classList.toggle('opacity-0')
+    }, 300)
   }
 
   getCardTemplate(person) {

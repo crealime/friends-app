@@ -81,6 +81,10 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+.opacity-0 {
+  opacity: 0;
+}
+
 .bg-man {
   background: var(--color-man);
 }
