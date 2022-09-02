@@ -4,11 +4,10 @@ const config = {
   nat: 'us,de,fr,gb,ua,us,ca',
   results: 240,
   getUrl() {
-    const fullURL = this.base
-    fullURL.searchParams.set('inc', this.inc)
-    fullURL.searchParams.set('nat', this.nat)
-    fullURL.searchParams.set('results', this.results)
-    return fullURL
+    this.base.searchParams.set('inc', this.inc)
+    this.base.searchParams.set('nat', this.nat)
+    this.base.searchParams.set('results', this.results)
+    return this.base
   }
 }
 

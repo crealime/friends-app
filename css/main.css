@@ -44,6 +44,7 @@ a:focus {
 
 button {
   -webkit-tap-highlight-color: transparent;
+  outline: none;
   transition-duration: 300ms;
   border: 1px solid transparent;
   cursor: pointer;
