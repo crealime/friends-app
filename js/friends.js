@@ -41,38 +41,6 @@ export default class Friends {
     this.renderFriends(this.personsEdit)
   }
 
-  filterFriends(inputs = [], substring = '') {
-    this.personsEdit = [...this.persons]
-
-    inputs.forEach(input => {
-      if (input.name === 'age-min') {
-        this.personsEdit = this.personsEdit.filter(person => person.dob.age >= input.value)
-      }
-      if (input.name === 'age-max') {
-        this.personsEdit = this.personsEdit.filter(person => person.dob.age <= input.value)
-      }
-      if (input.name === 'by-age' && input.checked && input.value === 'up') {
-        this.personsEdit = this.personsEdit.sort((a, b) => a.dob.age - b.dob.age)
-      }
-      if (input.name === 'by-age' && input.checked && input.value === 'down') {
-        this.personsEdit = this.personsEdit.sort((a, b) => b.dob.age - a.dob.age)
-      }
-      if (input.name === 'by-name' && input.checked && input.value === 'up') {
-        this.personsEdit = this.personsEdit.sort((a, b) => a.name.first > b.name.first ? 1 : -1)
-      }
-      if (input.name === 'by-name' && input.checked && input.value === 'down') {
-        this.personsEdit = this.personsEdit.sort((a, b) => a.name.first < b.name.first ? 1 : -1)
-      }
-      if (input.name === 'by-gender' && input.checked && input.value !== 'all') {
-        this.personsEdit = this.personsEdit.filter(person => person.gender === input.value)
-      }
-    })
-
-    if (substring) this.personsEdit = this.personsEdit.filter(person => `${person.name.first} ${person.name.last}`.toLowerCase().includes(substring.toLowerCase()))
-
-    this.renderFriends(this.personsEdit)
-  }
-
   renderFriends(persons = this.personsEdit) {
     this.container.innerHTML = ''
 

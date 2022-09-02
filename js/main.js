@@ -36,7 +36,7 @@ function initMain() {
     glob.reloadDataIcon.classList.toggle('rotate-360')
     store.init().then(() => {
       glob.friends.reloadPersons(store.persons)
-      glob.friends.filterFriends(glob.inputs, glob.search.value)
+      glob.friends.filterFriendsByURL(glob.inputs, glob.search.value)
     })
   })
 
@@ -52,21 +52,18 @@ function initMain() {
     if (e.target.name) updateURL(e.target.name, e.target.value)
 
     glob.friends.filterFriendsByURL()
-    // glob.friends.filterFriends(glob.inputs, glob.search.value)
   })
 
   glob.formFilters.addEventListener('reset', function() {
     resetURL()
     glob.search.value = ''
     glob.friends.filterFriendsByURL()
-    // glob.friends.filterFriends([], glob.search.value)
   })
 
   glob.search.addEventListener('input', function(e) {
     updateURL(e.target.name, e.target.value)
 
     glob.friends.filterFriendsByURL()
-    // glob.friends.filterFriends(glob.inputs, e.target.value)
   })
 }
 
