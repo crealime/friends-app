@@ -1,8 +1,8 @@
 export default class Friends {
-  constructor(persons, container) {
+  constructor(persons, glob) {
     this.persons = persons
+    this.glob = glob
     this.personsEdit = [...this.persons]
-    this.container = container
   }
 
   reloadPersons(persons) {
@@ -10,9 +10,10 @@ export default class Friends {
     this.personsEdit = [...this.persons]
   }
 
-  filterFriendsByURL() {
+  filterFriendsByURL(url) {
     this.personsEdit = [...this.persons]
-    const params = (new URL(document.location).searchParams)
+    const params = url.searchParams
+
     if (params.get('age-min')) {
       this.personsEdit = this.personsEdit.filter(person => person.dob.age >= params.get('age-min'))
     }
@@ -38,13 +39,17 @@ export default class Friends {
       this.personsEdit = this.personsEdit.filter(person => `${person.name.first} ${person.name.last}`.toLowerCase().includes(params.get('is-name').toLowerCase()))
     }
 
+    if (this.glob.currentPage > this.personsEdit.length / this.glob.cardsOnPage) {
+      this.glob.pagination.changePage(Math.ceil(this.personsEdit.length / this.glob.cardsOnPage))
+    }
+
     this.renderFriends(this.personsEdit)
   }
 
-  renderFriends(persons = this.personsEdit) {
-    this.container.innerHTML = ''
+  renderFriends(persons = this.personsEdit, page = this.glob.currentPage) {
+    this.glob.friendsContainer.innerHTML = ''
 
-    this.container.innerHTML = persons.reduce((acc, el) => {
+    this.glob.friendsContainer.innerHTML = persons.slice((page - 1) * this.glob.cardsOnPage, page * this.glob.cardsOnPage).reduce((acc, el) => {
       return acc + this.getCardTemplate(el)
     }, '')
   }

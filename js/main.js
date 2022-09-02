@@ -1,11 +1,14 @@
 import CustomRange from './range.js'
 import store from './store.js'
 import Friends from './friends.js'
+import Pagination from './pagination.js'
 
 const glob = {}
 
-function initMain() {
+function initGlob() {
   glob.baseURL = new URL(window.location)
+  glob.cardsOnPage = 24
+  glob.currentPage = glob.baseURL.searchParams.get('page') || 1
   glob.rangeAge01 = document.querySelector('.range__age_01')
   glob.rangeAge02 = document.querySelector('.range__age_02')
   glob.trackAge = document.querySelector('.range__age-track')
@@ -20,6 +23,9 @@ function initMain() {
   glob.main = document.querySelector('.main')
   glob.inputs = document.querySelectorAll('input')
   glob.search = document.querySelector('.top-menu__search')
+  glob.paginationInput = document.querySelector('.pagination__input')
+  glob.paginationLeft = document.querySelector('.pagination__left')
+  glob.paginationRight = document.querySelector('.pagination__right')
 
   glob.colorPrimary = getComputedStyle(document.documentElement).getPropertyValue('--color-primary')
   glob.colorMan = getComputedStyle(document.documentElement).getPropertyValue('--color-man')
@@ -36,7 +42,7 @@ function initMain() {
     glob.reloadDataIcon.classList.toggle('rotate-360')
     store.init().then(() => {
       glob.friends.reloadPersons(store.persons)
-      glob.friends.filterFriendsByURL(glob.inputs, glob.search.value)
+      glob.friends.filterFriendsByURL(glob.baseURL)
     })
   })
 
@@ -51,24 +57,23 @@ function initMain() {
 
     if (e.target.name) updateURL(e.target.name, e.target.value)
 
-    glob.friends.filterFriendsByURL()
+    glob.friends.filterFriendsByURL(glob.baseURL)
   })
 
   glob.formFilters.addEventListener('reset', function() {
     resetURL()
-    glob.search.value = ''
-    glob.friends.filterFriendsByURL()
+    glob.friends.filterFriendsByURL(glob.baseURL)
   })
 
   glob.search.addEventListener('input', function(e) {
     updateURL(e.target.name, e.target.value)
 
-    glob.friends.filterFriendsByURL()
+    glob.friends.filterFriendsByURL(glob.baseURL)
   })
 }
 
 function setInputs() {
-  const params = (new URL(document.location).searchParams)
+  const params = glob.baseURL.searchParams
 
   if (params.get('age-min')) {
     document.querySelector('input[name="age-min"]').value = params.get('age-min')
@@ -100,19 +105,26 @@ function setInputs() {
   if (params.get('is-name')) {
     document.querySelector('input[name="is-name"]').value = params.get('is-name')
   }
+  if (params.get('page')) {
+    glob.currentPage = params.get('page')
+  }
 }
 
 function updateURL(param, value) {
   if (param === 'by-age') glob.baseURL.searchParams.delete('by-name')
   if (param === 'by-name') glob.baseURL.searchParams.delete('by-age')
-
   glob.baseURL.searchParams.set(param, value)
+  if (param === 'is-name' && value.length === 0) glob.baseURL.searchParams.delete('is-name')
   history.replaceState(null, null, glob.baseURL)
 }
 
 function resetURL() {
-  glob.baseURL = new URL(window.location.origin + window.location.pathname)
-  history.replaceState(null, null, window.location.origin + window.location.pathname)
+  glob.baseURL.searchParams.delete('by-name')
+  glob.baseURL.searchParams.delete('by-age')
+  glob.baseURL.searchParams.delete('by-gender')
+  glob.baseURL.searchParams.delete('age-min')
+  glob.baseURL.searchParams.delete('age-max')
+  history.replaceState(null, null, glob.baseURL)
 }
 
 function initAgeRange() {
@@ -133,16 +145,23 @@ function fadeOut(element, duration, delay) {
   })
 }
 
+function initPagination() {
+  glob.pagination = new Pagination(glob)
+}
+
+function initFriends() {
+  store.init().then(() => {
+    glob.friends = new Friends(store.persons, glob)
+    glob.friends.filterFriendsByURL(glob.baseURL)
+  })
+}
+
 window.addEventListener('load', function() {
-  initMain()
+  initGlob()
   setInputs()
   initAgeRange()
-  store.init().then(() => {
-    console.log(store.persons)
-    glob.friends = new Friends(store.persons, glob.friendsContainer)
-    glob.friends.filterFriendsByURL()
-  })
-
+  initFriends()
+  initPagination()
   fadeOut(glob.preloader, 300, 500)
 })
 

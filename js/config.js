@@ -2,7 +2,7 @@ const config = {
   base: new URL('https://randomuser.me/api/'),
   inc: 'dob,gender,name,phone,location,picture,login',
   nat: 'us,de,fr,gb,ua,us,ca',
-  results: 100,
+  results: 240,
   getUrl() {
     const fullURL = this.base
     fullURL.searchParams.set('inc', this.inc)
