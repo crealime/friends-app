@@ -57,6 +57,7 @@ function initMain() {
 
   glob.formFilters.addEventListener('reset', function() {
     resetURL()
+    glob.search.value = ''
     glob.friends.filterFriendsByURL()
     // glob.friends.filterFriends([], glob.search.value)
   })
@@ -113,6 +114,7 @@ function updateURL(param, value) {
 }
 
 function resetURL() {
+  glob.baseURL = new URL(window.location.origin + window.location.pathname)
   history.replaceState(null, null, window.location.origin + window.location.pathname)
 }
 
