@@ -86,8 +86,6 @@
   background: var(--color-primary);
 }
 
-/*CUSTOM RANGE*/
-
 .range {
   position: relative;
   width: 100%;
@@ -211,8 +209,6 @@ input[type="range"].range-02::-ms-thumb {
   transform: translateX(5px);
 }
 
-/*END OF CUSTOM RANGE*/
-
 @media screen and (max-width: 480px) {
   .filter__buttons-box {
     margin-top: 16px;
@@ -226,4 +222,3 @@ input[type="range"].range-02::-ms-thumb {
     margin-top: 10px;
   }
 }
-

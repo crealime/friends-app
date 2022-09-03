@@ -1,10 +1,6 @@
 export default class Pagination {
   constructor(glob) {
     this.glob = glob
-
-    this.glob.paginationLeft.addEventListener('click', () => {this.listToPreviousPage()})
-    this.glob.paginationRight.addEventListener('click', () => {this.listToNextPage()})
-    this.glob.paginationInput.addEventListener('change', (e) => {this.listToThisPage(e)})
   }
 
   changePage(page) {
@@ -46,5 +42,4 @@ export default class Pagination {
   setCurrentPageToInput() {
     this.glob.paginationInput.value = this.glob.currentPage
   }
-
 }

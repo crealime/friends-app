@@ -48,6 +48,42 @@ function initGlob() {
       glob.filters.filterFriendsByURL(glob.baseURL)
     })
   })
+
+  glob.formFilters.addEventListener('change', (e) => {
+    if (e.target.name === 'by-age') glob.inputs.forEach(input => {
+      if (input.name === 'by-name') input.checked = false
+    })
+    if (e.target.name === 'by-name') glob.inputs.forEach(input => {
+      if (input.name === 'by-age') input.checked = false
+    })
+    if (e.target.name) glob.filters.updateURL(e.target.name, e.target.value)
+    glob.filters.filterFriendsByURL(glob.baseURL)
+  })
+
+  glob.formFilters.addEventListener('reset', () => {
+    glob.filters.resetURL()
+    glob.filters.filterFriendsByURL(glob.baseURL)
+    setTimeout(() => {
+      glob.range.changeRangeValuesInHTML()
+      glob.range.fillRangeTrack()}, 10)
+  })
+
+  glob.search.addEventListener('input', (e) => {
+    glob.filters.updateURL(e.target.name, e.target.value)
+    glob.filters.filterFriendsByURL(glob.baseURL)
+  })
+
+  glob.paginationLeft.addEventListener('click', () => {glob.pagination.listToPreviousPage()})
+  glob.paginationRight.addEventListener('click', () => {glob.pagination.listToNextPage()})
+  glob.paginationInput.addEventListener('change', (e) => {glob.pagination.listToThisPage(e)})
+
+  glob.rangeAge01.addEventListener('input', (e) => {
+    glob.range.changeCustomRange(e.target)
+  })
+
+  glob.rangeAge02.addEventListener('input', (e) => {
+    glob.range.changeCustomRange(e.target)
+  })
 }
 
 glob.toggleClass = function(tElement, tClass) {
@@ -69,9 +105,9 @@ function fadeOut(element, duration, delay) {
 }
 
 function initAgeRange() {
-  glob.customRange = new CustomRange(glob)
-  glob.customRange.changeRangeValuesInHTML()
-  glob.customRange.fillRangeTrack()
+  glob.range = new CustomRange(glob)
+  glob.range.changeRangeValuesInHTML()
+  glob.range.fillRangeTrack()
 }
 
 function initPagination() {

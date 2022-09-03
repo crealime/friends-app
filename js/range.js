@@ -4,7 +4,6 @@ export default class CustomRange {
     this.input02 = glob.rangeAge02
     this.track = glob.trackAge
     this.values = glob.valuesAge
-    this.form = glob.formFilters
     this.colorPrimary = glob.colorPrimary
     this.colorMan = glob.colorMan
     this.colorWoman = glob.colorWoman
@@ -13,20 +12,6 @@ export default class CustomRange {
     this.inputs = new Map()
     this.inputs.set(this.input01, this.input02)
     this.inputs.set(this.input02, this.input01)
-
-    this.form.addEventListener('reset', () => {
-      setTimeout(() => {
-        this.changeRangeValuesInHTML()
-        this.fillRangeTrack()}, 10)
-    })
-
-    this.input01.addEventListener('input', (e) => {
-      this.changeCustomRange(e.target)
-    })
-
-    this.input02.addEventListener('input', (e) => {
-      this.changeCustomRange(e.target)
-    })
   }
 
   changeCustomRange(that) {

@@ -1,30 +1,6 @@
 export default class Filters {
   constructor(glob) {
     this.glob = glob
-
-    this.glob.formFilters.addEventListener('change', (e) => {
-
-      if (e.target.name === 'by-age') this.glob.inputs.forEach(input => {
-        if (input.name === 'by-name') input.checked = false
-      })
-      if (e.target.name === 'by-name') this.glob.inputs.forEach(input => {
-        if (input.name === 'by-age') input.checked = false
-      })
-
-      if (e.target.name) this.updateURL(e.target.name, e.target.value)
-
-      this.filterFriendsByURL(this.glob.baseURL)
-    })
-
-    this.glob.formFilters.addEventListener('reset', () => {
-      this.resetURL()
-      this.filterFriendsByURL(this.glob.baseURL)
-    })
-
-    this.glob.search.addEventListener('input', (e) => {
-      this.updateURL(e.target.name, e.target.value)
-      this.filterFriendsByURL(this.glob.baseURL)
-    })
   }
 
   setInputs() {
@@ -67,8 +43,8 @@ export default class Filters {
       }
     }
 
-    this.glob.customRange.changeRangeValuesInHTML()
-    this.glob.customRange.fillRangeTrack()
+    this.glob.range.changeRangeValuesInHTML()
+    this.glob.range.fillRangeTrack()
   }
 
   setHistory() {
