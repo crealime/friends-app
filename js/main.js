@@ -130,10 +130,12 @@ function initFilters() {
 
 function watchHistory() {
   window.addEventListener('popstate', (e) => {
-    glob.baseURL = new URL(e.state.href)
-    glob.filters.filterFriendsByURL(glob.baseURL)
-    glob.filters.setInputs()
-    glob.pagination.setCurrentPageToInput()
+    if (e.state) {
+      glob.baseURL = new URL(e.state.href)
+      glob.filters.filterFriendsByURL(glob.baseURL)
+      glob.filters.setInputs()
+      glob.pagination.setCurrentPageToInput()
+    }
   })
 }
 
