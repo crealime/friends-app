@@ -12,13 +12,14 @@ export default class Friends {
 
   renderFriends(persons = this.personsEdit, page = this.glob.currentPage) {
     this.glob.friendsContainer.classList.toggle('opacity-0')
+
     setTimeout(() => {
       this.glob.friendsContainer.innerHTML = ''
       this.glob.friendsContainer.innerHTML = persons.slice((page - 1) * this.glob.cardsOnPage, page * this.glob.cardsOnPage).reduce((acc, el) => {
         return acc + this.getCardTemplate(el)
       }, '')
       this.glob.friendsContainer.classList.toggle('opacity-0')
-    }, 300)
+    }, this.glob.duration)
   }
 
   getCardTemplate(person) {

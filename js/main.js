@@ -1,8 +1,8 @@
-import CustomRange from './range.js'
 import store from './store.js'
+import CustomRange from './range.js'
 import Friends from './friends.js'
-import Pagination from './pagination.js'
 import Filters from "./filters.js";
+import Pagination from './pagination.js'
 
 const glob = {}
 
@@ -70,10 +70,13 @@ function fadeOut(element, duration, delay) {
 
 function initAgeRange() {
   glob.customRange = new CustomRange(glob)
+  glob.customRange.changeRangeValuesInHTML()
+  glob.customRange.fillRangeTrack()
 }
 
 function initPagination() {
   glob.pagination = new Pagination(glob)
+  glob.pagination.setCurrentPageToInput()
 }
 
 function initFriends() {
@@ -85,11 +88,12 @@ function initFriends() {
 
 function initFilters() {
   glob.filters = new Filters(glob)
+  glob.filters.setInputs()
+  glob.filters.setHistory()
 }
 
 function watchHistory() {
   window.addEventListener('popstate', (e) => {
-    console.log('popstate: ', e.state.href)
     glob.baseURL = new URL(e.state.href)
     glob.filters.filterFriendsByURL(glob.baseURL)
     glob.filters.setInputs()

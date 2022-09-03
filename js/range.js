@@ -14,11 +14,6 @@ export default class CustomRange {
     this.inputs.set(this.input01, this.input02)
     this.inputs.set(this.input02, this.input01)
 
-    // First changes
-    this.changeRangeValuesInHTML()
-    this.fillRangeTrack()
-
-    // Listeners
     this.form.addEventListener('reset', () => {
       setTimeout(() => {
         this.changeRangeValuesInHTML()
@@ -34,7 +29,6 @@ export default class CustomRange {
     })
   }
 
-  // Methods
   changeCustomRange(that) {
     if (+this.input01.value <= +this.input02.value) {
       this.inputs.get(that).style.zIndex = '1'

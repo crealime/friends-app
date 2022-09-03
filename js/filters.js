@@ -25,9 +25,6 @@ export default class Filters {
       this.updateURL(e.target.name, e.target.value)
       this.filterFriendsByURL(this.glob.baseURL)
     })
-
-    this.setInputs()
-    this.setHistory()
   }
 
   setInputs() {
