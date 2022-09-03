@@ -116,7 +116,7 @@ export default class Filters {
     }
 
     if (this.glob.currentPage > this.glob.friends.personsEdit.length / this.glob.cardsOnPage) {
-      this.glob.pagination.changePage(Math.ceil(this.glob.friends.personsEdit.length / this.glob.cardsOnPage))
+      this.glob.pagination.changePage(Math.ceil(this.glob.friends.personsEdit.length / this.glob.cardsOnPage) || 1)
     }
 
     this.glob.friends.renderFriends(this.glob.friends.personsEdit)
