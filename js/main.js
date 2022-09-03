@@ -54,10 +54,6 @@ glob.toggleClass = function(tElement, tClass) {
   tElement.classList.toggle(tClass)
 }
 
-function initAgeRange() {
-  new CustomRange(glob.rangeAge01, glob.rangeAge02, glob.trackAge, glob.valuesAge, glob.formFilters, glob.colorPrimary, glob.colorMan, glob.colorWoman)
-}
-
 function fadeOut(element, duration, delay) {
   const animation = element.animate([
     {opacity: 1},
@@ -70,6 +66,10 @@ function fadeOut(element, duration, delay) {
   animation.addEventListener('finish', function() {
     element.style.display = 'none'
   })
+}
+
+function initAgeRange() {
+  glob.customRange = new CustomRange(glob)
 }
 
 function initPagination() {
@@ -87,22 +87,23 @@ function initFilters() {
   glob.filters = new Filters(glob)
 }
 
-function initHistory() {
+function watchHistory() {
   window.addEventListener('popstate', (e) => {
-    console.log(e)
+    // console.log('popstate: ', e.state.href)
     glob.baseURL = new URL(e.state.href)
     glob.filters.filterFriendsByURL(glob.baseURL)
     glob.filters.setInputs()
+    glob.pagination.setCurrentPageToInput()
   })
 }
 
 window.addEventListener('load', function() {
   initGlob()
-  initFilters()
   initAgeRange()
-  initFriends()
   initPagination()
-  initHistory()
+  initFilters()
+  initFriends()
+  watchHistory()
   fadeOut(glob.preloader, 300, 500)
 })
 

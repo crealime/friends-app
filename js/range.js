@@ -1,22 +1,22 @@
 export default class CustomRange {
-  constructor(input01, input02, track, values, form, colorPrimary, colorMan, colorWoman) {
-    this.input01 = input01
-    this.input02 = input02
-    this.track = track
-    this.values = values
-    this.form = form
-    this.colorPrimary = colorPrimary
-    this.colorMan = colorMan
-    this.colorWoman = colorWoman
+  constructor(glob) {
+    this.input01 = glob.rangeAge01
+    this.input02 = glob.rangeAge02
+    this.track = glob.trackAge
+    this.values = glob.valuesAge
+    this.form = glob.formFilters
+    this.colorPrimary = glob.colorPrimary
+    this.colorMan = glob.colorMan
+    this.colorWoman = glob.colorWoman
     this.gradienrOffset = 2
 
     this.inputs = new Map()
-    this.inputs.set(input01, input02)
-    this.inputs.set(input02, input01)
+    this.inputs.set(this.input01, this.input02)
+    this.inputs.set(this.input02, this.input01)
 
     // First changes
-    this.changeRangeValuesInHTML(this.input01, this.input02, this.values)
-    this.fillRangeTrack(this.input01, this.input02, this.track)
+    this.changeRangeValuesInHTML()
+    this.fillRangeTrack()
 
     // Listeners
     this.form.addEventListener('reset', () => {

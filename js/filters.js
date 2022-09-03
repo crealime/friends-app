@@ -32,11 +32,20 @@ export default class Filters {
   setInputs() {
     const params = this.glob.baseURL.searchParams
 
+    document.querySelectorAll(`input[type="radio"]`).forEach(el => el.checked = false)
+    this.glob.customRange.changeRangeValuesInHTML()
+    this.glob.customRange.fillRangeTrack()
+
+    if (!params.has('page')) {
+      this.glob.currentPage = 1
+      this.glob.pagination.setCurrentPageToInput()
+    }
+
     for (let p of params) {
       if (p[0] === 'page') {
         this.glob.currentPage = p[1]
       }
-      if (p[0] === 'age-min' || p[0] === 'age-man' || p[0] === 'is-name') {
+      if (p[0] === 'age-min' || p[0] === 'age-max' || p[0] === 'is-name') {
         document.querySelector(`input[name="${p[0]}"]`).value = p[1]
       }
       else if (p[1] === 'up') {
@@ -55,6 +64,9 @@ export default class Filters {
         document.querySelector(`input[name="${p[0]}"][value="female"]`).checked = true
       }
     }
+
+    this.glob.customRange.changeRangeValuesInHTML()
+    this.glob.customRange.fillRangeTrack()
   }
 
   updateURL(param, value) {
@@ -63,7 +75,7 @@ export default class Filters {
     this.glob.baseURL.searchParams.set(param, value)
     if (param === 'is-name' && value.length === 0) this.glob.baseURL.searchParams.delete('is-name')
     history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
-    console.log(this.glob.baseURL)
+    history.replaceState({href: window.location.href}, null, this.glob.baseURL.href)
   }
 
   resetURL() {
@@ -73,6 +85,7 @@ export default class Filters {
     this.glob.baseURL.searchParams.delete('age-min')
     this.glob.baseURL.searchParams.delete('age-max')
     history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
+    history.replaceState({href: window.location.href}, null, this.glob.baseURL.href)
   }
 
   filterFriendsByURL(url) {

@@ -2,7 +2,7 @@ export default class Pagination {
   constructor(glob) {
     this.glob = glob
 
-    this.setCurrentPageToInput(this.glob.currentPage)
+    this.setCurrentPageToInput()
     this.glob.paginationLeft.addEventListener('click', () => {this.listToPreviousPage()})
     this.glob.paginationRight.addEventListener('click', () => {this.listToNextPage()})
     this.glob.paginationInput.addEventListener('change', (e) => {this.listToThisPage(e)})
@@ -11,9 +11,10 @@ export default class Pagination {
   changePage(page) {
     this.glob.currentPage = page
     this.glob.friends.renderFriends(this.glob.friends.personsEdit, page)
-    this.setCurrentPageToInput(page)
+    this.setCurrentPageToInput()
     this.glob.baseURL.searchParams.set('page', page)
-    history.replaceState(null, null, this.glob.baseURL)
+    history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
+    history.replaceState({href: window.location.href}, null, this.glob.baseURL.href)
   }
 
   listToPreviousPage() {
@@ -43,8 +44,8 @@ export default class Pagination {
     }
   }
 
-  setCurrentPageToInput(page) {
-    this.glob.paginationInput.value = page
+  setCurrentPageToInput() {
+    this.glob.paginationInput.value = this.glob.currentPage
   }
 
 }

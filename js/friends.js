@@ -11,7 +11,6 @@ export default class Friends {
   }
 
   renderFriends(persons = this.personsEdit, page = this.glob.currentPage) {
-
     this.glob.friendsContainer.classList.toggle('opacity-0')
     setTimeout(() => {
       this.glob.friendsContainer.innerHTML = ''
