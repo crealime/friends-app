@@ -27,18 +27,23 @@ export default class Filters {
     })
 
     this.setInputs()
+    this.setHistory()
   }
 
   setInputs() {
     const params = this.glob.baseURL.searchParams
 
     document.querySelectorAll(`input[type="radio"]`).forEach(el => el.checked = false)
-    this.glob.customRange.changeRangeValuesInHTML()
-    this.glob.customRange.fillRangeTrack()
 
     if (!params.has('page')) {
       this.glob.currentPage = 1
       this.glob.pagination.setCurrentPageToInput()
+    }
+    if (!params.has('age-min')) {
+      document.querySelector(`input[name="age-min"]`).value = 0
+    }
+    if (!params.has('age-max')) {
+      document.querySelector(`input[name="age-max"]`).value = 100
     }
 
     for (let p of params) {
@@ -49,19 +54,19 @@ export default class Filters {
         document.querySelector(`input[name="${p[0]}"]`).value = p[1]
       }
       else if (p[1] === 'up') {
-        document.querySelector(`input[name="${p[0]}"][value="up"]`).checked = true
+        document.querySelector(`input[value="up"]`).checked = true
       }
       else if (p[1] === 'down') {
-        document.querySelector(`input[name="${p[0]}"][value="down"]`).checked = true
+        document.querySelector(`input[value="down"]`).checked = true
       }
       else if (p[1] === 'all') {
-        document.querySelector(`input[name="${p[0]}"][value="all"]`).checked = true
+        document.querySelector(`input[value="all"]`).checked = true
       }
       else if (p[1] === 'male') {
-        document.querySelector(`input[name="${p[0]}"][value="male"]`).checked = true
+        document.querySelector(`input[value="male"]`).checked = true
       }
       else if (p[1] === 'female') {
-        document.querySelector(`input[name="${p[0]}"][value="female"]`).checked = true
+        document.querySelector(`input[value="female"]`).checked = true
       }
     }
 
@@ -69,13 +74,17 @@ export default class Filters {
     this.glob.customRange.fillRangeTrack()
   }
 
+  setHistory() {
+    history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
+    history.replaceState({href: window.location.href}, null, this.glob.baseURL.href)
+  }
+
   updateURL(param, value) {
     if (param === 'by-age') this.glob.baseURL.searchParams.delete('by-name')
     if (param === 'by-name') this.glob.baseURL.searchParams.delete('by-age')
     this.glob.baseURL.searchParams.set(param, value)
     if (param === 'is-name' && value.length === 0) this.glob.baseURL.searchParams.delete('is-name')
-    history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
-    history.replaceState({href: window.location.href}, null, this.glob.baseURL.href)
+    this.setHistory()
   }
 
   resetURL() {
@@ -84,8 +93,7 @@ export default class Filters {
     this.glob.baseURL.searchParams.delete('by-gender')
     this.glob.baseURL.searchParams.delete('age-min')
     this.glob.baseURL.searchParams.delete('age-max')
-    history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
-    history.replaceState({href: window.location.href}, null, this.glob.baseURL.href)
+    this.setHistory()
   }
 
   filterFriendsByURL(url) {

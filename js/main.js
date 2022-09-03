@@ -89,7 +89,7 @@ function initFilters() {
 
 function watchHistory() {
   window.addEventListener('popstate', (e) => {
-    // console.log('popstate: ', e.state.href)
+    console.log('popstate: ', e.state.href)
     glob.baseURL = new URL(e.state.href)
     glob.filters.filterFriendsByURL(glob.baseURL)
     glob.filters.setInputs()
