@@ -125,7 +125,6 @@ function initFriends() {
 function initFilters() {
   glob.filters = new Filters(glob)
   glob.filters.setInputs()
-  glob.filters.setHistory()
 }
 
 function watchHistory() {
@@ -143,8 +142,8 @@ window.addEventListener('load', function() {
   initGlob()
   initAgeRange()
   initPagination()
-  initFilters()
   initFriends()
+  initFilters()
   watchHistory()
   fadeOut(glob.preloader, 300, 500)
 })
