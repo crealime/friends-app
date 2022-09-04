@@ -13,6 +13,17 @@
   border-radius: 10px 0 0 10px;
 }
 
+.filter__item .filter__input:focus {
+
+}
+
+.filter__box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80px;
+}
+
 .filter__description {
   color: var(--color-light);
 }
@@ -210,6 +221,11 @@ input[type="range"].range-02::-ms-thumb {
 }
 
 @media screen and (max-width: 480px) {
+
+  .filter__box:first-child {
+    margin-bottom: 20px;
+  }
+
   .filter__buttons-box {
     margin-top: 16px;
   }
