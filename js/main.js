@@ -125,6 +125,7 @@ function initFriends() {
 function initFilters() {
   glob.filters = new Filters(glob)
   glob.filters.setInputs()
+  glob.filters.replaceHistory()
 }
 
 function watchHistory() {

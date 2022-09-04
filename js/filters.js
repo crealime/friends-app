@@ -48,7 +48,15 @@ export default class Filters {
   }
 
   setHistory() {
+    this.pushHistory()
+    this.replaceHistory()
+  }
+
+  pushHistory() {
     history.pushState({href: window.location.href}, null, this.glob.baseURL.href)
+  }
+
+  replaceHistory() {
     history.replaceState({href: window.location.href}, null, this.glob.baseURL.href)
   }
 
@@ -57,7 +65,7 @@ export default class Filters {
     if (param === 'by-name') this.glob.baseURL.searchParams.delete('by-age')
     this.glob.baseURL.searchParams.set(param, value)
     if (param === 'is-name' && value.length === 0) this.glob.baseURL.searchParams.delete('is-name')
-    this.setHistory()
+    this.pushHistory()
   }
 
   resetURL() {
