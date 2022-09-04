@@ -26,20 +26,11 @@ export default class Filters {
       if (p[0] === 'age-min' || p[0] === 'age-max' || p[0] === 'is-name') {
         document.querySelector(`input[name="${p[0]}"]`).value = p[1]
       }
-      else if (p[1] === 'up') {
-        document.querySelector(`input[value="up"]`).checked = true
+      if (p[0] === 'sort-by') {
+        document.querySelector(`input[value="${p[1]}"]`).checked = true
       }
-      else if (p[1] === 'down') {
-        document.querySelector(`input[value="down"]`).checked = true
-      }
-      else if (p[1] === 'all') {
-        document.querySelector(`input[value="all"]`).checked = true
-      }
-      else if (p[1] === 'male') {
-        document.querySelector(`input[value="male"]`).checked = true
-      }
-      else if (p[1] === 'female') {
-        document.querySelector(`input[value="female"]`).checked = true
+      if (p[0] === 'by-gender') {
+        document.querySelector(`input[value="${p[1]}"]`).checked = true
       }
     }
 
@@ -61,16 +52,13 @@ export default class Filters {
   }
 
   updateURL(param, value) {
-    if (param === 'by-age') this.glob.baseURL.searchParams.delete('by-name')
-    if (param === 'by-name') this.glob.baseURL.searchParams.delete('by-age')
     this.glob.baseURL.searchParams.set(param, value)
     if (param === 'is-name' && value.length === 0) this.glob.baseURL.searchParams.delete('is-name')
     this.pushHistory()
   }
 
   resetURL() {
-    this.glob.baseURL.searchParams.delete('by-name')
-    this.glob.baseURL.searchParams.delete('by-age')
+    this.glob.baseURL.searchParams.delete('sort-by')
     this.glob.baseURL.searchParams.delete('by-gender')
     this.glob.baseURL.searchParams.delete('age-min')
     this.glob.baseURL.searchParams.delete('age-max')
@@ -88,14 +76,10 @@ export default class Filters {
       if (p[0] === 'age-max') {
         this.glob.friends.personsEdit = this.glob.friends.personsEdit.filter(person => person.dob.age <= p[1])
       }
-      if (p[0] === 'by-age') {
-        if (p[1] === 'up') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.dob.age - b.dob.age)
-        if (p[1] === 'down') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => b.dob.age - a.dob.age)
-      }
-      if (p[0] === 'by-name') {
-        if (p[1] === 'up') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.name.first > b.name.first ? 1 : -1)
-        if (p[1] === 'down') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.name.first < b.name.first ? 1 : -1)
-      }
+      if (p[1] === 'name-up') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.name.first > b.name.first ? 1 : -1)
+      if (p[1] === 'name-down') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.name.first < b.name.first ? 1 : -1)
+      if (p[1] === 'age-up') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => a.dob.age - b.dob.age)
+      if (p[1] === 'age-down') this.glob.friends.personsEdit = this.glob.friends.personsEdit.sort((a, b) => b.dob.age - a.dob.age)
       if (p[0] === 'by-gender' && p[1] !== 'all') {
         this.glob.friends.personsEdit = this.glob.friends.personsEdit.filter(person => person.gender === p[1])
       }
