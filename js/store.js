@@ -35,6 +35,7 @@ class Store {
         console.log(err)
         return this.getData() // When an error is received from the server, the function is called again (CORS error)
       }
+      console.log(err)
       return Promise.reject(err)
     }
   }
