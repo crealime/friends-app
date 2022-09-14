@@ -16,7 +16,7 @@ class Store {
     this.url = url
     this.persons = null
     this.errorCount = 0
-    this.maxErrorCount = 50
+    this.maxErrorCount = 10
   }
 
   async init() {
