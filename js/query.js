@@ -1,4 +1,4 @@
-export default class Request {
+export default class Query {
   constructor(url) {
     this.url = url
     this.errorCount = 0

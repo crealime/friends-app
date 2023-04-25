@@ -1,4 +1,4 @@
-import Request from './request.js'
+import Query from './query.js'
 import CustomRange from './range.js'
 import Friends from './friends.js'
 import Filters from './filters.js'
@@ -122,7 +122,7 @@ function initPagination() {
 }
 
 function initFriends() {
-  const request = new Request(GLOB.config.getUrl())
+  const request = new Query(GLOB.config.getUrl())
   request.init().then((response) => {
     GLOB.friends = new Friends(response, GLOB)
     GLOB.filters.filterFriendsByURL(GLOB.baseURL)
